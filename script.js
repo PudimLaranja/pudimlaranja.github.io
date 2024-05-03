@@ -1,7 +1,19 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 var __data__ = []
-var center = {x:canvas.width/2,y:canvas.height/2}
+const center = { x: canvas.width / 2, y: canvas.height / 2 }
+
+function print(content) {
+    const debug = document.getElementById('debug')
+    var p = document.createElement('p');
+    p.innerHTML = `${content}`
+    debug.appendChild(p)
+}
+
+function refresh() {
+    const debug = document.getElementById('debug');
+    debug.innerHTML = '';
+}
 
 class Vector {
     constructor(x, y) {
@@ -57,13 +69,13 @@ class Point {
         this.canvas_y = this.y + center.y
         this.color = color;
 
-        this.__update__ = function (self,frame) {
-            return self,frame
-        } 
+        this.__update__ = function(self, frame) {
+            return self, frame
+        }
 
-        this.__init__ = function () {
+        this.__init__ = function() {
             __data__.push(this)
-          this.draw();
+            this.draw();
         };
         this.__init__();
     }
@@ -86,14 +98,14 @@ class Point {
     }
 }
 
-class Line{
-    constructor(points,color) {
+class Line {
+    constructor(points, color) {
         this.points = points
         this.color = color;
-        this.__update__ = (self,frame) => {
-            return self,frame
+        this.__update__ = (self, frame) => {
+            return self, frame
         }
-        this.__init__ = function () {
+        this.__init__ = function() {
             __data__.push(this)
             this.draw();
         }
@@ -106,48 +118,48 @@ class Line{
         }
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        this.points.forEach((point,idx) => {
+        this.points.forEach((point, idx) => {
             if (idx == 0) {
                 ctx.moveTo(point.x, point.y);
             } else {
                 ctx.lineTo(point.x, point.y)
                 ctx.stroke();
-                ctx.moveTo(point.x,point.y)
-            }                                                            
+                ctx.moveTo(point.x, point.y)
+            }
         });
-    
+
         ctx.closePath();
     }
 
     update(func) {
         this.__update__ = func;
     }
-    
+
 }
 
 
 
 var point_list = [
-    [100, 100]/*,
-    [-100, 100],
-    [-100, -100],
-    [100,-100]*/
+    [100, 100]
+    /*,
+        [-100, 100],
+        [-100, -100],
+        [100,-100]*/
 ];
 point_list.forEach((point, idx) => {
     point_list[idx] = new Point(point[0], point[1], "red");
-    point_list[idx].update((self,frame) => {
-        let angle = 2 * Math.PI * frame
-        
-        let vec = new Vector(1, 1);
-        vec = vec.normalize()
+    point_list[idx].update((self, frame) => {
+            let angle = 2 * Math.PI * frame
+            let vec = new Vector(self.x, self.y);
+            let distance = vec.magnitude();
+            let my_angle = vec.angleWith(new Vector(1, 0))
 
-        let sin_angle = Math.asin(vec.magnitude())
-        let cos_angle = Math.acos(vec.magnitude())
-
-        console.log(`sin:${sin_angle},cos:{${cos_angle}}`)
-        self.x = Math.cos(angle) * 100
-        self.y = Math.sin(angle) * 100
-    })
+            print(angle)
+            print(my_angle)
+            self.x = Math.cos(angle + my_angle) * distance
+            self.y = Math.sin(angle + my_angle) * distance
+        })
+        //*/
 });
 point_list.push("wrap");
 
@@ -157,26 +169,28 @@ new Line(point_list, "blue");
 
 
 function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 var frame = 0
 
 function update() {
     clearCanvas();
+    refresh()
     __data__.forEach(item => {
-        item.__update__(item,frame/100)
-       item.draw() 
+        item.__update__(item, frame / 100)
+        item.draw()
     })
     if (frame < 100) {
         frame++
     } else {
         frame = 0
     }
-    
+
+
 }
 
-setInterval(update,500)
+setInterval(update, 500)
 
 
 
