@@ -176,7 +176,7 @@ function update() {
     
 }
 
-setInterval(update,10)
+setInterval(update,500)
 
 
 
