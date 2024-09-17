@@ -9,10 +9,11 @@
         body {
             justify-content: center;
         }
-
+        
         canvas {
             border: 1px solid black;
             cursor: crosshair;
+            background-color: white;
         }
     </style>
 </head>
@@ -20,12 +21,18 @@
 <body>
     <canvas id="myCanvas" width="1200" height="500"></canvas>
 
-    <body>
+    <div>
+        <button onclick="toggle_update()" id="controll_button">
+            Stop
+        </button>
         <div id="debug"></div>
-    </body>
+    </div>
+    <script src="vectors.js"></script>
+    <script src="setup.js"></script>
     <script src="classes.js"></script>
-    <script src="script.js"></script>
+    <script src="mouse_handler.js"></script>
     <script src="main.js"></script>
+    <script src="render.js"></script>
 </body>
 
 </html>
