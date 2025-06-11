@@ -1,0 +1,49 @@
+.produto  {
+background-color: white; width: 400px;
+padding-left: 20px;
+border-radius: 50px;
+transition: background-color 1s;
+}
+.produto:hover  {
+    background-color: rgb(223, 223, 205);
+    transform: scale(1.1,1.1);
+
+}
+.produto img{
+    height:250px;
+    width: 75%;
+    object-fit: cover;
+}
+#Cervejas{
+display: flex;
+flex-direction: row; 
+gap: 20px;
+margin-top: 10px;
+}
+header img{
+    height: auto;
+    width: 10%;
+}
+header {
+    display: flex;
+    background-color:black;
+    color: white;
+    
+    flex-direction: row;
+    gap: 20px;
+}
+
+header #titulo {
+    justify-self: center;
+    
+}
+header div{
+    display: flex;
+    width: 100%;
+     height: 100%;
+     justify-content: center;
+    
+}
+body{
+    background-color: lightgray;
+}
